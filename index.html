@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<style>
+					
+			* {
+				box-sizing: border-box;
+				list-style: none;
+				text-decoration: none;
+				padding: 0;
+				margin: 0;
+			}
+			
+			ul  {
+				width: 300px;
+				color: red;
+			}
+			
+			ul ul{
+				position: absolute;
+				top: 0;
+				left: 100%;
+				display: none;
+			}
+			
+			ul li {
+				position: relative;
+			}
+			
+			ul li:hover > ul{
+				display: block;
+			}
+			
+			ul li {
+				display: block;
+				padding: 5px;
+				border: 1px solid #cc9999;
+				text-align: center;
+				text-decoration: none;
+				color: #000;
+				background-color: #fafafa;
+			}
+			
+			ul li:hover {
+				color: #ffffff;
+				background-color: #6dcfe7;
+			}  
+
+		</style>
+	</head>
+	<body>
+
+		<script>
+
+			const nav = [
+				{listText: 'List-Item 1'},
+				{listText: 'List-Item 2'},
+				{listText: 'List-Item 3'},
+				{
+					listText: 'List-Item 4',
+					submenu: [
+						{listText: 'List-Item 4.1'},
+						{listText: 'List-Item 4.2'},
+						{listText: 'List-Item 4.3'},
+					]
+				},
+				{
+					listText: 'List-Item 5',
+					submenu: [
+						{listText: 'List-Item 5.1'},
+						{listText: 'List-Item 5.2'},
+						{listText: 'List-Item 5.3'},
+						{
+							listText: 'List-Item 5.4',
+							submenu: [
+								{listText: 'List-Item 5.4.1'},
+								{listText: 'List-Item 5.4.2'},
+								{listText: 'List-Item 5.4.3'},
+							]
+						}
+					]
+				}
+			];
+
+			function navBuild(arr) {
+				const $ul = document.createElement('ul');
+			
+				arr.forEach(item => {
+					const $li = document.createElement('li');
+					$li.innerText = item.listText;
+					
+					if(item.submenu) {
+						$li.classList.add('submenu');
+						const $subMenu = navBuild(item.submenu);
+			
+						$li.append($subMenu);
+					}
+
+					$ul.append($li);
+				})
+
+				return $ul;
+			}
+
+			const $menu = navBuild(nav);
+
+			document.body.prepend($menu);	
+			
+		</script>
+		
+	</body>
+</html>
